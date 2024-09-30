@@ -40,10 +40,9 @@ class ModelTrainer:
                 "Decision Tree": DecisionTreeRegressor(),
                 "Gradient Boosting": GradientBoostingRegressor(),
                 "Linear Regression": LinearRegression(),
-                "K-Neighbors Regressor": KNeighborsRegressor(),
                 "XGBRegressor": XGBRegressor(),
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
-                "AdaBoost Regressor": AdaBoostRegressor()
+                "AdaBoost Regressor": AdaBoostRegressor(),
             }
 
             params={
@@ -54,8 +53,9 @@ class ModelTrainer:
                 },
                 "Random Forest":{
                     # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                    # 'max_features':['sqrt','log2'],
-                    'n_estimators':[8,16,32,64,128,256],
+                 
+                    # 'max_features':['sqrt','log2',None],
+                    'n_estimators': [8,16,32,64,128,256]
                 },
                 "Gradient Boosting":{
                     # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
@@ -79,8 +79,7 @@ class ModelTrainer:
                     'learning_rate':[.1,.01,0.5,.001],
                     # 'loss':['linear','square','exponential'],
                     'n_estimators': [8,16,32,64,128,256]
-                },
-                "K-Neighbors Regressor":{}
+                }
             }
 
             model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
@@ -111,7 +110,6 @@ class ModelTrainer:
 
             r2_square = r2_score(y_test, predicted)
             return r2_square
-
 
         except Exception as e:
             raise CustomException(e,sys)
